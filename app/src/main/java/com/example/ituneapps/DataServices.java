@@ -156,7 +156,7 @@ public class DataServices {
         return categories;
     }
 
-    public static ArrayList<App> getAppsByCategory(String category){
+    public static ArrayList<App> getAppsByCategory(ArrayList<String> category){
         if(apps.containsKey(category)) {
             return apps.get(category);
         }

@@ -1,8 +1,13 @@
 package com.example.ituneapps;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,55 +25,55 @@ public class AppCategoriesFragment extends Fragment {
     FragmentAppCategoriesBinding binding;
     ListView listView;
     ArrayAdapter arrayAdapter;
-    DataServices dataServices;
-
-    private static final String ARG_PARAM1 = "param1";
+    ArrayList<String> data = DataServices.getAppCategories();
+    public static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
 
-//    private String mParam1;
-//    private String mParam2;
 
     public AppCategoriesFragment() {
         // Required empty public constructor
     }
-
-
-//    public static AppCategoriesFragment newInstance(String param1, String param2) {
-//        AppCategoriesFragment fragment = new AppCategoriesFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ArrayList<String> data = DataServices.getAppCategories();
-        binding = FragmentAppCategoriesBinding.inflate(inflater, container, false);
 
-        listView = binding.appCatListView;
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data);
-        listView.setAdapter(arrayAdapter);
+        binding = FragmentAppCategoriesBinding.inflate(inflater, container, false);
+        createListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
+                passData.sendFrag();
             }
         });
 
       return binding.getRoot();
+    }
+
+    public void createListView(){
+        listView = binding.appCatListView;
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data);
+        listView.setAdapter(arrayAdapter);
+    }
+
+    PassData passData;
+
+    @Override
+    public  void onAttach(@NonNull Context context){
+        super.onAttach(context);
+        passData = (PassData) context;
+    }
+    interface PassData{
+        void sendFrag();
     }
 }

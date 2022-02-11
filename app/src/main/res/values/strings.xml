@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">iTune Apps</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_AppList_fragment">Hello App List fragment</string>
+    <string name="hello_AppDetail_fragment">Hello App Details fragment</string>
+    <string name="AppList">Go To App List Fragment </string>
+    <string name="AppDetail">Go To App Detail Fragment</string>
 </resources>
