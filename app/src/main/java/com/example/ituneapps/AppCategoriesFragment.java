@@ -18,19 +18,25 @@ import android.widget.ListView;
 
 import com.example.ituneapps.databinding.FragmentAppCategoriesBinding;
 
+import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
-public class AppCategoriesFragment extends Fragment {
+public class AppCategoriesFragment extends Fragment implements Serializable {
     FragmentAppCategoriesBinding binding;
     ListView listView;
     ArrayAdapter arrayAdapter;
-    ArrayList<String> data = DataServices.getAppCategories();
-    public static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ArrayList<String> appCategories = DataServices.getAppCategories();
 
 
 
+
+    //Test App Adapter
+    AppAdapter appAdapter;
     public AppCategoriesFragment() {
         // Required empty public constructor
     }
@@ -43,27 +49,33 @@ public class AppCategoriesFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentAppCategoriesBinding.inflate(inflater, container, false);
-        createListView();
+        //createListView();
+        createListExTendedView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 passData.sendFrag();
+
             }
         });
-
       return binding.getRoot();
     }
 
     public void createListView(){
         listView = binding.appCatListView;
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, data);
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, appCategories);
         listView.setAdapter(arrayAdapter);
+    }
+
+    public void createListExTendedView(){
+//        listView = binding.appCatListView;
+//        appAdapter = new AppAdapter(getActivity(), R.layout.app_list_layout, apps);
+//        listView.setAdapter(appAdapter);
     }
 
     PassData passData;
@@ -75,5 +87,7 @@ public class AppCategoriesFragment extends Fragment {
     }
     interface PassData{
         void sendFrag();
+        void sendAccount(DataServices.App app);
+        void createListExTendedView();
     }
 }

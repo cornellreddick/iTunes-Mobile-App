@@ -49,7 +49,16 @@ public class MainActivity extends AppCompatActivity implements AppCategoriesFrag
                 .addToBackStack(null)
                 .commit();
     }
+    @Override
+    public void sendAccount(DataServices.App app){
 
+    }
 
+    @Override
+    public void createListExTendedView() {
+
+    }
+
+    ;
 
 }

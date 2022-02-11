@@ -23,11 +23,12 @@ import java.util.List;
 
 public class AppListFragment extends Fragment implements AppCategoriesFragment.PassData {
     FragmentAppListBinding binding;
-    ListView listView;
-    //ArrayAdapter arrayAdapter;
     DataServices dataServices;
     AppAdapter appAdapter;
+    ListView listView;
     ArrayAdapter arrayAdapter;
+    ArrayList<String> appCategories = DataServices.getAppCategories();
+    ArrayList<DataServices.App> appArrayList = DataServices.getAppsByCategory(appCategories);
 
     private String catGroupName;
 
@@ -48,6 +49,8 @@ public class AppListFragment extends Fragment implements AppCategoriesFragment.P
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAppListBinding.inflate(inflater, container, false);
+
+        createListExTendedView();
         binding.appListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,5 +74,17 @@ public class AppListFragment extends Fragment implements AppCategoriesFragment.P
                 .replace(R.id.containerView, new AppCategoriesFragment())
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void sendAccount(DataServices.App app) {
+
+    }
+
+    @Override
+    public void createListExTendedView() {
+        listView = binding.appListView;
+        appAdapter = new AppAdapter(getActivity(), R.layout.app_list_layout, appArrayList);
+        listView.setAdapter(appAdapter);
     }
 }
