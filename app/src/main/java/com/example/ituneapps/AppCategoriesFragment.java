@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ituneapps.databinding.FragmentAppCategoriesBinding;
 
@@ -31,6 +32,8 @@ public class AppCategoriesFragment extends Fragment implements Serializable {
     ListView listView;
     ArrayAdapter arrayAdapter;
     ArrayList<String> appCategories = DataServices.getAppCategories();
+
+    ArrayList<String> list;
 
 
 
@@ -53,13 +56,33 @@ public class AppCategoriesFragment extends Fragment implements Serializable {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        list = new ArrayList<>();
+        list =  DataServices.getAppCategories();
+
+
+
         binding = FragmentAppCategoriesBinding.inflate(inflater, container, false);
-        //createListView();
-        createListExTendedView();
+        createListView();
+        //createListExTendedView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                passData.sendFrag();
+                String test = list.get(position);
+
+
+                AppListFragment appListFragment = new AppListFragment(); //where data needs to be pass
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", test);
+                appListFragment.setArguments(bundle);
+                //Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
+
+                arrayAdapter.notifyDataSetChanged();
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.containerView, new AppListFragment())
+                        .addToBackStack(null)
+                        .commit();
+                //passData.sendFrag();
 
             }
         });
@@ -68,7 +91,7 @@ public class AppCategoriesFragment extends Fragment implements Serializable {
 
     public void createListView(){
         listView = binding.appCatListView;
-        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, appCategories);
+        arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         listView.setAdapter(arrayAdapter);
     }
 

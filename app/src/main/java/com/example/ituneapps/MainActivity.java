@@ -42,8 +42,14 @@ public class MainActivity extends AppCompatActivity implements AppCategoriesFrag
 
     }
 
+    //ArrayList<String> app = DataServices.getAppCategories();
     @Override
     public void sendFrag() {
+
+        AppListFragment appListFragment = new AppListFragment(); //where data needs to be pass
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("data", app);
+//        appListFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.containerView, new AppListFragment())
                 .addToBackStack(null)

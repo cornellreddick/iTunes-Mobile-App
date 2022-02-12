@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class DataServices {
+public class DataServices implements Serializable{
     private static final HashMap<String, ArrayList<App>> apps= new HashMap<String, ArrayList<App>>(){{
         put("Top Free Apps", new ArrayList<App>(){{
             add(new App(new ArrayList<String>(Arrays.asList("Entertainment","Social Networking")),"1510177719","1508067409","Qianyun Zhao","https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/f2/0a/0d/f20a0d26-d8cf-d55f-5370-be56080d7188/AppIcon-1x_U007emarketing-0-7-0-0-85-220.png/200x200bb.png","Zynn","2020-05-06","https://apps.apple.com/us/app/zynn/id1510177719"));
